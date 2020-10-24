@@ -1,0 +1,12 @@
+{
+  "name": "WildPotatoesHackTX",
+  "displayName": "WildPotatoesHackTX",
+  "expo": {
+    "name": "WildPotatoesHackTX",
+    "slug": "WildPotatoesHackTX",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
