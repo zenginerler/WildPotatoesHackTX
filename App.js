@@ -9,6 +9,7 @@
 *
 ***********************************************************************/
 import React, { useState } from 'react';
+import { LogBox } from 'react-native'
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
@@ -37,6 +38,9 @@ const fetchFonts = () => {
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
   })
 }
+
+// disable error warnings while in development
+LogBox.ignoreAllLogs()
 
 export default function App() {
 

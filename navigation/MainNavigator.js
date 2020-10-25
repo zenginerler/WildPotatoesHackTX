@@ -2,6 +2,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 
 import MenteeHomeScreen from '../screens/MenteeHomeScreen'
+import GoalCreatorScreen from '../screens/GoalCreatorScreen'
 
 const defaultNavOptions = {
     headerTintColor: 'black',
@@ -13,6 +14,7 @@ const defaultNavOptions = {
 const MenteeNavigator = createStackNavigator(
     {
         Home: MenteeHomeScreen,
+        Goal: GoalCreatorScreen,
     },
     {
         defaultNavigationOptions: defaultNavOptions,

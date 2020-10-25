@@ -1,7 +1,7 @@
 import { ADD_GOAL } from '../actions/goals'
 
 const initialState = {
-    goals: 0,
+    goals: [],
 }
 
 const goalReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const goalReducer = (state = initialState, action) => {
         case ADD_GOAL: {
             return {
                 ...state,
-                goals: action.data.goals,
+                goals: action.data.newGoalArray,
             }
         }
         default: {

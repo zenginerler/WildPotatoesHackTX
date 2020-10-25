@@ -1,36 +1,45 @@
-import React, { useState, useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import Goal from '../components/goal';
-import { useSelector, useDispatch } from 'react-redux'
-import { addGoal } from '../store/actions/goals'
+import React, { useState, useCallback, useEffect } from 'react'
+import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { Button, DefaultTheme } from 'react-native-paper'
+import Goal from '../components/goal'
+import { useSelector } from 'react-redux'
+import colors from '../assets/colors'
 
 const MenteeHomeScreen = props => {
 
-  const dispatch = useDispatch()
+  const renderListItem = (itemData) => {
+    return (
+      <Goal
+        goalName={itemData.goalName}
+        key={itemData.goalName}
+      />
+    )
+  }
+
   const goals = useSelector(state => state.goals.goals)
 
   const buttonHandler = () => {
-    addGoalHandler(goals + 1)
+    props.navigation.replace('Goal')
   }
 
-  const addGoalHandler = useCallback((newGoal) => {
-    dispatch(addGoal(newGoal))
-  }, [dispatch])
+  useEffect(() => {
+    // console.log(goals)
+  }, [goals])
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Hello World!</Text>
-      </View>
+      {goals.map((goal) => (
+        renderListItem(goal)
+      ))}
       <View style={styles.body}>
-        <Button icon="plus-circle-outline" mode="contained" onPress={() => buttonHandler()}>
-          Increment Goal {goals}
+        <Button 
+          icon="plus-circle-outline" 
+          mode="contained" 
+          onPress={() => buttonHandler()}
+          theme={{ ...DefaultTheme, colors: { primary: colors.primary } }}>
+          New Goal
         </Button>
       </View>
-      <Goal 
-        goalName = "Workout"
-      />
     </View>
   );
 }
@@ -60,7 +69,13 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: 50,
+  },
+  list: {
+    width: '80%',
+    backgroundColor: 'whitesmoke'
+    
   }
 });
 
