@@ -1,59 +1,59 @@
+/**********************************************************************;
+* Project           : Mentee Goal Tracker (HackTX 2020)
+*
+* Author            : Ahmet Nalcaci, Mehmet Zenginerler, Sriram Alagappan, 
+*
+* Date created      : 10/24/2020
+*
+* Purpose           : 
+*
+***********************************************************************/
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import Goal from './components/goal.js';
+import * as Font from 'expo-font'
+import { AppLoading } from 'expo'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import ReduxThunk from 'redux-thunk'
+
+// import navigator
+import MainNavigator from './navigation/MainNavigator'
+
+// import reducers
+import goalReducer from './store/reducers/goals'
+
+
+// combine and create store
+const rootReducer = combineReducers({
+  goals: goalReducer,
+})
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
+
+
+// get fonts from assests
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+  })
+}
 
 export default function App() {
 
-  const [counter, setCounter] = useState(0);
-
-  const buttonHandler = () => {
-    setCounter(oldCounter => oldCounter + 1);
-    console.log(counter);
+  const [fontLoaded, setFontLoaded] = useState(false)
+  // load fonts
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+      />
+    )
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Hello World!</Text>
-      </View>
-      <View style={styles.body}>
-        <Button icon="plus-circle-outline" mode="contained" onPress={() => buttonHandler()}>
-          Increment Goal {counter}
-        </Button>
-      </View>
-      <Goal 
-        goalName = "Workout"
-      />
-    </View>
+    <Provider store={store}>
+      <MainNavigator />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-  counter: {
-    backgroundColor: 'red',
-    width: "60%",
-    alignItems: 'center',
-
-  },
-  header: {
-    height: '8%',
-    width: '100%',
-    backgroundColor: 'orange',
-    justifyContent: 'flex-end',
-  },
-  headerText: {
-    color: 'white',
-    fontSize: 28,
-    paddingLeft: 5,
-  },
-  body: {
-    flex: 1,
-    justifyContent: 'center',
-  }
-});

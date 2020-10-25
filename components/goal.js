@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
         color: 'black',
         paddingLeft: 5,
         paddingTop: 4,
+        fontFamily: 'open-sans'
     },
     goalName: {
         
