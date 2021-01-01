@@ -22,14 +22,12 @@ import MainNavigator from './navigation/MainNavigator'
 // import reducers
 import goalReducer from './store/reducers/goals'
 
-
 // combine and create store
 const rootReducer = combineReducers({
   goals: goalReducer,
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
-
 
 // get fonts from assests
 const fetchFonts = () => {
